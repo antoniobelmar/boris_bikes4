@@ -8,4 +8,7 @@ describe DockingStation do
   it "ensures release_bike gets user new bike" do
     expect(DockingStation.new.release_bike).to be_an_instance_of(Bike)
   end
+  it "makes sure the bike works" do
+    expect(DockingStation.new.release_bike.working?).to eq true
+  end
 end
