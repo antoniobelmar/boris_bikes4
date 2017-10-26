@@ -18,8 +18,12 @@ describe DockingStation do
   it "stores the docked bikes" do
     station=DockingStation.new
     bike = station.release_bike
-    station.dock(bike)
-    expect(Docking_station.new).to sho
+    expect(station.dock(bike)).to eq (bike)
   end
-
+  it "shows the docked bikes" do
+    station=DockingStation.new
+    bike = station.release_bike
+    station.dock(bike)
+    expect(station.bike).to eq (bike)
+  end
 end
