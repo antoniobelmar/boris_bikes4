@@ -11,4 +11,8 @@ describe DockingStation do
   it "makes sure the bike works" do
     expect(DockingStation.new.release_bike.working?).to eq true
   end
+  it "makes docking possible" do
+    station=DockingStation.new
+    expect(station).to respond_to(:dock).with(1).argument
+  end
 end
