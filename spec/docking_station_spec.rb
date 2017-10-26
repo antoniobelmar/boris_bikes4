@@ -2,8 +2,6 @@ require "docking_station"
 
 describe DockingStation do
   it 'responds to release_bike' do
-    expect(release_bike(DockingStation)).to eq 'respond_to'
+   expect(DockingStation.new).to respond_to(:release_bike)
   end
-
-
 end
