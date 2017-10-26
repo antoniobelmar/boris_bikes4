@@ -13,8 +13,11 @@ class DockingStation
   end
 
   def dock(bike)
-      raise "This docking station is full, please try a different one!" unless @bikes.count<20
-      @bikes=bike
+    if @bikes.count<20
+      @bikes.push(bike)
+    else
+      raise "This docking station is full, please try a different one!"
+    end
   end
 
 end
