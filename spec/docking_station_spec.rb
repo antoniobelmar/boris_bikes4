@@ -15,4 +15,11 @@ describe DockingStation do
     station=DockingStation.new
     expect(station).to respond_to(:dock).with(1).argument
   end
+  it "stores the docked bikes" do
+    station=DockingStation.new
+    bike = station.release_bike
+    station.dock(bike)
+    expect(Docking_station.new).to sho
+  end
+
 end
