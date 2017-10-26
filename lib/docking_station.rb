@@ -1,3 +1,5 @@
+require "./lib/bike"
+
 class DockingStation
   attr_reader :bike
 
@@ -7,7 +9,8 @@ class DockingStation
   end
 
   def dock(bike)
-    @bike=bike
+      raise "This docking station is full, please try a different one!" unless @bike==nil
+      @bike=bike
   end
 
 end

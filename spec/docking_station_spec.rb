@@ -31,4 +31,9 @@ describe DockingStation do
   it "expects docking station to not release bikes if there are none" do
     expect{DockingStation.new.release_bike}.to raise_error("There are no bikes at this docking station. Sorry!")
   end
+  it "only allows for docking once the docking station is empty" do
+    station=DockingStation.new
+    bike=station.release_bike unless station.bike==nil
+    expect{station.dock(bike2)}.to raise_error if station.bike!=nil
+  end
 end
