@@ -1,12 +1,13 @@
 require "./lib/bike"
 
 class DockingStation
-  attr_reader :bikes, :capacity
+  attr_reader :bikes, :capacity, :broken_bikes
 
   DEFAULT_CAPACITY=20
 
   def initialize(capacity = DEFAULT_CAPACITY)
     @bikes=[]
+    @broken_bikes=[]
     @capacity = capacity
   end
 
@@ -17,8 +18,12 @@ class DockingStation
 
   def dock(bike,working=true)
     raise "This docking station is full, please try a different one!" if full?
+    store(bike,working)
+  end
+
+  def store(bike,working)
     @bikes.push(bike)
-    
+    @broken_bikes.push(bike) if working==false
   end
 
   private

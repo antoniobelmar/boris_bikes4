@@ -10,7 +10,7 @@ describe DockingStation do
     end
 
     it "obtain error when trying to dock a bike in a full docking station" do
-      bike=station.release_bike unless station.bikes.empty?
+      bike=Bike.new
       expect{station.dock(bike)}.to raise_error("This docking station is full, please try a different one!") if station.bikes.count>=DockingStation::DEFAULT_CAPACITY
     end
 
@@ -59,12 +59,13 @@ describe DockingStation do
   describe "bikes" do
 
     it "stores the docked bikes" do
-      bike=station.release_bike unless station.bikes.empty?
-      expect(station.dock(bike)).to include(bike)
+      bike=Bike.new
+      station.dock(bike)
+      expect(station.bikes).to include(bike)
     end
 
     it "shows the docked bikes" do
-      bike = station.release_bike unless station.bikes.empty?
+      bike = Bike.new
       station.dock(bike)
       expect(station.bikes).to include(bike)
     end
@@ -86,9 +87,22 @@ describe DockingStation do
       expect(test_station.capacity).to eq(50)
     end
 
-
-
   end
 
+  describe "store" do
+    it "stores bikes that are broken in bikes variable" do
+      bike=Bike.new
+      station.dock(bike,false)
+      expect(station.bikes).to include(bike)
+    end
+
+    it "stores bikes that are broken in broken_bikes variable" do
+      bike=Bike.new
+      station.dock(bike,false)
+      p "HERE", station.broken_bikes
+      expect(station.broken_bikes).to include(bike)
+    end
+
+  end
 
 end
