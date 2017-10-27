@@ -72,4 +72,21 @@ describe DockingStation do
 
   end
 
+  describe "capacity" do
+
+    it "a new instance of DockingStation should respond to an argument" do
+      #test_station = DockingStation.new (50)
+      expect(DockingStation).to respond_to(:new).with(1).argument
+    end
+
+    it "should set a capacity of the argument passed in" do
+      test_station = DockingStation.new (50)
+      expect(test_station.capacity).to eq(50)
+    end
+
+
+
+  end
+
+
 end
