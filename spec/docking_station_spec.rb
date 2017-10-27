@@ -10,24 +10,14 @@ describe DockingStation do
     end
 
     it "obtain error when trying to dock a bike in a full docking station" do
-      bike=Bike.new
-      expect{station.dock(bike)}.to raise_error("This docking station is full, please try a different one!") if station.bikes.count>=DockingStation::DEFAULT_CAPACITY
-    end
-
-    it "obtain error when trying to dock a bike in a full docking station" do
       new_station = DockingStation.new (0)
       bike = Bike.new
-      expect{new_station.dock(bike)}.to raise_error("This docking station is full, please try a different one!") #if new_station.bikes.count>=new_station.capacity
+      expect{new_station.dock(bike)}.to raise_error("This docking station is full, please try a different one!")
     end
 
     it "allows to dock 20 bikes to an empty docking station" do
-      station.capacity.times do station.dock(Bike.new)
-      end
+      station.capacity.times {station.dock(Bike.new)}
       expect(station.bikes.count).to eq(20)
-    end
-
-    it "should allow user to report broken bikes when docking as second argument" do
-      expect(station).to respond_to(:dock).with(2).arguments
     end
 
   end
@@ -38,34 +28,39 @@ describe DockingStation do
       expect(station).to respond_to(:release_bike)
     end
 
-    it "ensures release_bike gets user new bike" do
-      expect(station.release_bike).to be_an_instance_of(Bike) unless station.bikes.empty?
+    it "ensures release_bike gets user new bike when there are available bikes" do
+      bike=Bike.new
+      station.dock(bike)
+      expect(station.release_bike).to be_an_instance_of(Bike)
     end
 
     it "expects docking station to not release bikes if there are none" do
       expect{station.release_bike}.to raise_error("There are no bikes at this docking station. Sorry!")
     end
 
+    it "expects docking station to not release broken bikes" do
+      bike=Bike.new
+      bike.report_broken
+      station.dock(bike)
+      expect{station.release_bike}.to raise_error("Sorry, there are only broken bikes left!")
+    end
+
   end
 
   describe "working?" do
 
-    it "makes sure the bike works" do
-      expect(station.release_bike.working?).to eq true unless station.bikes.empty?
+    it "makes sure the bike released is in working condition" do
+      bike=Bike.new
+      station.dock(bike)
+      expect(station.release_bike.working?).to eq true
     end
 
   end
 
   describe "bikes" do
 
-    it "stores the docked bikes" do
+    it "stores and shows the docked bikes" do
       bike=Bike.new
-      station.dock(bike)
-      expect(station.bikes).to include(bike)
-    end
-
-    it "shows the docked bikes" do
-      bike = Bike.new
       station.dock(bike)
       expect(station.bikes).to include(bike)
     end
@@ -90,17 +85,11 @@ describe DockingStation do
   end
 
   describe "store" do
+
     it "stores bikes that are broken in bikes variable" do
       bike=Bike.new
-      station.dock(bike,false)
+      station.dock(bike)
       expect(station.bikes).to include(bike)
-    end
-
-    it "stores bikes that are broken in broken_bikes variable" do
-      bike=Bike.new
-      station.dock(bike,false)
-      p "HERE", station.broken_bikes
-      expect(station.broken_bikes).to include(bike)
     end
 
   end

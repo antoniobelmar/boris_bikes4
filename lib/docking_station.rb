@@ -13,27 +13,27 @@ class DockingStation
 
   def release_bike
     raise "There are no bikes at this docking station. Sorry!" if empty?
-    @bikes
+    raise "Sorry, there are only broken bikes left!" if @bikes.count==0
+    @bikes.pop
   end
 
-  def dock(bike,working=true)
+  def dock(bike)
     raise "This docking station is full, please try a different one!" if full?
-    store(bike,working)
+    store(bike)
   end
 
-  def store(bike,working)
-    @bikes.push(bike)
-    @broken_bikes.push(bike) if working==false
+  def store(bike)
+    bike.working? ? @bikes.push(bike) : @broken_bikes.push(bike)
   end
 
   private
 
   def full?
-    @bikes.count>=capacity
+    (@bikes.count + @broken_bikes.count)>=capacity
   end
 
   def empty?
-    @bikes.count==0
+    (@bikes.count + @broken_bikes.count)==0
   end
 
 end
