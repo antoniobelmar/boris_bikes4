@@ -41,7 +41,7 @@ describe DockingStation do
   it "obtain error when trying to dock a bike in a full docking station" do
     station=DockingStation.new
     bike=station.release_bike unless station.bikes.empty?
-    expect{station.dock(bike)}.to raise_error("This docking station is full, please try a different one!") if station.bikes.count>=20
+    expect{station.dock(bike)}.to raise_error("This docking station is full, please try a different one!") if station.bikes.count>=DockingStation::DEFAULT_CAPACITY
   end
 
   it "gives a default value to bikes of an empty array when initializing an instance of the DockingStation class" do
@@ -50,9 +50,9 @@ describe DockingStation do
 
   it "allows to dock 20 bikes to an empty docking station" do
     station=DockingStation.new
-    20.times do station.dock(Bike.new)
+    DockingStation::DEFAULT_CAPACITY.times do station.dock(Bike.new)
     end
-    expect{station.dock(Bike.new)}.to raise_error("This docking station is full, please try a different one!")
+    expect(station.bikes.count).to eq(20)
   end
 
 end
