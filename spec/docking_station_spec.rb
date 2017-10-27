@@ -26,6 +26,10 @@ describe DockingStation do
       expect(station.bikes.count).to eq(20)
     end
 
+    it "should allow user to report broken bikes when docking as second argument" do
+      expect(station).to respond_to(:dock).with(2).arguments
+    end
+
   end
 
   describe "release_bike" do
@@ -74,7 +78,6 @@ describe DockingStation do
   describe "capacity" do
 
     it "a new instance of DockingStation should respond to an argument" do
-      #test_station = DockingStation.new (50)
       expect(DockingStation).to respond_to(:new).with(1).argument
     end
 

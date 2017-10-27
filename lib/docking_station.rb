@@ -15,9 +15,10 @@ class DockingStation
     @bikes
   end
 
-  def dock(bike)
+  def dock(bike,working=true)
     raise "This docking station is full, please try a different one!" if full?
     @bikes.push(bike)
+    
   end
 
   private
