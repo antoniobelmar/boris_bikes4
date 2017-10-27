@@ -3,13 +3,6 @@ require "docking_station"
 describe DockingStation do
   let(:station) {DockingStation.new}
 
-
-
-
-
-
-
-
   describe "dock" do
 
     it "makes docking possible" do
@@ -21,8 +14,14 @@ describe DockingStation do
       expect{station.dock(bike)}.to raise_error("This docking station is full, please try a different one!") if station.bikes.count>=DockingStation::DEFAULT_CAPACITY
     end
 
+    it "obtain error when trying to dock a bike in a full docking station" do
+      new_station = DockingStation.new (0)
+      bike = Bike.new
+      expect{new_station.dock(bike)}.to raise_error("This docking station is full, please try a different one!") #if new_station.bikes.count>=new_station.capacity
+    end
+
     it "allows to dock 20 bikes to an empty docking station" do
-      DockingStation::DEFAULT_CAPACITY.times do station.dock(Bike.new)
+      station.capacity.times do station.dock(Bike.new)
       end
       expect(station.bikes.count).to eq(20)
     end
